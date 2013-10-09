@@ -3,15 +3,24 @@ Copyright 2013 The Polymer Authors. All rights reserved.
 Use of this source code is governed by a BSD-style
 license that can be found in the LICENSE file.
 -->
+<link rel="import" href="../../polymer-ui-elements/polymer-ui-icon/polymer-ui-icon.html">
+<link rel="import" href="../../polymer-ui-elements/polymer-ui-menu/polymer-ui-menu.html">
+<link rel="import" href="../../polymer-ui-elements/polymer-ui-menu-item/polymer-ui-menu-item.html">
+<link rel="import" href="../../polymer-ui-elements/polymer-ui-submenu-item/polymer-ui-submenu-item.html">
 <link rel="import" href="../x-meta/x-meta.html">
 
 <polymer-element name="x-palette" on-mousedown="mousedown" attributes="canvas drag">
   <template>
     <style>
+      @host {
+        * {
+          position: relative;
+        }
+      }
       #title {
         height: 54px;
         line-height: 54px;
-        font-size: 21px;
+        font-size: 1.5px;
         padding-left: 22px;
         background-color: #E0E0E0;
         border-bottom: 1px solid #E1E1E1;
@@ -21,9 +30,8 @@ license that can be found in the LICENSE file.
         position: absolute;
         top: 0;
         right: 0px;
-        bottom: 0px;
         left: 0px;
-        padding: 8px;
+        bottom: 0px;
         overflow-y: auto;
         -webkit-overflow-scrolling: touch;
         -webkit-user-select: none;
@@ -31,15 +39,28 @@ license that can be found in the LICENSE file.
         -ms-user-select: none;
       }
       .item {
-        font-size: 15px;
+        Xfont-size: 15px;
+        Xmargin: 10px 6px 10px 10px;
         font-weight: bold;
         cursor: pointer;
         padding: 12px;
-        margin: 10px 6px 10px 10px;
+        margin: 4px 0;
         background-color: white;
         border: 1px solid #D3D2D2;
         border-radius: 5px;
         -webkit-transition: border 0.5s;
+      }
+      .stage .item {
+        background: url('stage.png');
+        color: white;
+      }
+      .grill .item {
+        background: url('grill.png');
+        color: white;
+      }
+      .satin .item {
+        background: url('satin.png');
+        color: white;
       }
       [ishidden] {
         display: none;
@@ -50,19 +71,41 @@ license that can be found in the LICENSE file.
     </style>
     <x-meta id="meta" categories="{{categories}}"></x-meta>
     <div id="list" on-trackstart="trackStart" on-track="track" on-trackend="trackEnd">
-      <template repeat="{{categories}}">
-        <h3>{{name}}</h3>
-        <template repeat="{{list}}">
-          <div class="item" tag="{{id}}" loaded?="{{importsLoaded}}" ishidden?="{{isHidden}}">{{label}}</div>
+      <polymer-ui-menu>
+        <template repeat="{{categories}}">
+          <polymer-ui-submenu-item label="{{name}}">
+            <template repeat="{{list}}">
+              <div class="item" tag="{{id}}" loaded?="{{importsLoaded}}" ishidden?="{{isHidden}}" theme="polymer-ui-dark-theme">
+                <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 1.2em;">
+                  {{label}}
+                </div>
+                <br />
+                <polymer-ui-icon icon="settings"></polymer-ui-icon><br />
+                <br />
+                Description.<br />
+                <br />
+                <polymer-ui-icon icon="briefcase" style="width: 96px; height: 96px;"></polymer-ui-icon><br />
+              </div>
+            </template>
+          </polymer-ui-submenu-item>
         </template>
-      </template>
+      </polymer-ui-menu>
     </div>
   </template>
   <script>
     Polymer('x-palette', {
+      categories: null,
       // TODO(sjmiles): needed only for Firefox?
       mousedown: function(event) {
+        this.$.list.className = ['satin', 'grill', 'stage', 'bluefog'][Math.floor(Math.random()*4)];
         event.preventDefault();
+      },
+      categoriesChanged: function() {
+        for (var i=0, c; c=this.categories[i]; i++) {
+          for (var j=0, e; e=c.list[j]; j++) {
+            e.bg = ['satin', 'grill', 'stage','bluefog'][Math.floor(Math.random()*4)];
+          }
+        }
       },
       trackStart: function(event) {
         event.stopPropagation();

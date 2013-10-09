@@ -62,6 +62,10 @@ license that can be found in the LICENSE file.
         background: url('satin.png');
         color: white;
       }
+      .bluefog .item {
+        background: url('bluefog.png');
+        color: white;
+      }
       [ishidden] {
         display: none;
       }
@@ -103,7 +107,7 @@ license that can be found in the LICENSE file.
       categoriesChanged: function() {
         for (var i=0, c; c=this.categories[i]; i++) {
           for (var j=0, e; e=c.list[j]; j++) {
-            e.bg = ['satin', 'grill', 'stage','bluefog'][Math.floor(Math.random()*4)];
+            e.bg = ['satin', 'grill', 'stage', 'bluefog'][Math.floor(Math.random()*4)];
           }
         }
       },

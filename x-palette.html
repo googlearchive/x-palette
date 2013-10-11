@@ -50,19 +50,19 @@ license that can be found in the LICENSE file.
         border-radius: 5px;
         -webkit-transition: border 0.5s;
       }
-      .stage .item {
+      .stage{
         background: url('stage.png');
         color: white;
       }
-      .grill .item {
+      .grill {
         background: url('grill.png');
         color: white;
       }
-      .satin .item {
+      .satin {
         background: url('satin.png');
         color: white;
       }
-      .bluefog .item {
+      .bluefog {
         background: url('bluefog.png');
         color: white;
       }
@@ -79,7 +79,7 @@ license that can be found in the LICENSE file.
         <template repeat="{{categories}}">
           <polymer-ui-submenu-item label="{{name}}">
             <template repeat="{{list}}">
-              <div class="item" tag="{{id}}" loaded?="{{importsLoaded}}" ishidden?="{{isHidden}}" theme="polymer-ui-dark-theme">
+              <div class="item {{bg}}" tag="{{id}}" loaded?="{{importsLoaded}}" ishidden?="{{isHidden}}" theme="polymer-ui-dark-theme">
                 <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 1.2em;">
                   {{label}}
                 </div>
@@ -99,17 +99,34 @@ license that can be found in the LICENSE file.
   <script>
     Polymer('x-palette', {
       categories: null,
-      // TODO(sjmiles): needed only for Firefox?
-      mousedown: function(event) {
-        this.$.list.className = ['satin', 'grill', 'stage', 'bluefog'][Math.floor(Math.random()*4)];
-        event.preventDefault();
+      // TODO(sjmiles): all of the next three methods are here only to simulate
+      // variety in the palette metadata (the background class in this case)
+      ready: function() {
+        this.watchMutation();
       },
-      categoriesChanged: function() {
-        for (var i=0, c; c=this.categories[i]; i++) {
-          for (var j=0, e; e=c.list[j]; j++) {
-            e.bg = ['satin', 'grill', 'stage', 'bluefog'][Math.floor(Math.random()*4)];
+      watchMutation: function() {
+        var change = function(observer, mutations) {
+          this.listDomChanged(mutations);
+          this.onMutation(this.$.list, change);
+        }.bind(this);
+        this.onMutation(this.$.list, change);
+      },
+      listDomChanged: function(mutations) {
+        for (var j=0, m; m=mutations[j]; j++) {
+          if (m.addedNodes) {
+            for (var i=0, n; n=m.addedNodes[i]; i++) {
+              if (n.localName === 'div' && n.classList.contains('item')) {
+                //console.log('new item');
+                n.classList.add(['satin', 'grill', 'stage', 'bluefog'][Math.floor(Math.random()*4)]);
+              }
+            }
           }
         }
+      },
+      // TODO(sjmiles): needed only for Firefox?
+      mousedown: function(event) {
+        //this.$.list.className = ['satin', 'grill', 'stage', 'bluefog'][Math.floor(Math.random()*4)];
+        event.preventDefault();
       },
       trackStart: function(event) {
         event.stopPropagation();

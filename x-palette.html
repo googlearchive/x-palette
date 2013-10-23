@@ -9,7 +9,7 @@ license that can be found in the LICENSE file.
 <link rel="import" href="../../polymer-ui-elements/polymer-ui-submenu-item/polymer-ui-submenu-item.html">
 <link rel="import" href="../x-meta/x-meta.html">
 
-<polymer-element name="x-palette" on-mousedown="mousedown" attributes="canvas drag">
+<polymer-element name="x-palette" on-mousedown="{{mousedown}}" attributes="canvas drag">
   <template>
     <style>
       @host {
@@ -74,7 +74,7 @@ license that can be found in the LICENSE file.
       }
     </style>
     <x-meta id="meta" categories="{{categories}}"></x-meta>
-    <div id="list" on-trackstart="trackStart" on-track="track" on-trackend="trackEnd">
+    <div id="list" on-trackstart="{{trackStart}}" on-track="{{track}}" on-trackend="{{trackEnd}}">
       <polymer-ui-menu>
         <template repeat="{{categories}}">
           <polymer-ui-submenu-item label="{{name}}">

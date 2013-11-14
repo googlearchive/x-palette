@@ -166,6 +166,7 @@ license that can be found in the LICENSE file.
       },
       createDragObject: function(tag, event) {
         var meta = this.$.meta.byId(tag);
+        var e = event || {};
         //
         var elt = meta.createElement();
         var style = elt.style;
@@ -175,7 +176,7 @@ license that can be found in the LICENSE file.
         style.webkitTransition = 'none';
         //
         return {
-          origin: {left: event.pageX - 24, top: event.pageY - 24},
+          origin: {left: e.pageX - 24, top: e.pageY - 24},
           element: elt
         };
       }

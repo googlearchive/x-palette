@@ -109,26 +109,26 @@ license that can be found in the LICENSE file.
       // TODO(sjmiles): all of the next three methods are here only to simulate
       // variety in the palette metadata (the background class in this case)
       ready: function() {
-        this.watchMutation();
-      },
-      watchMutation: function() {
-        var change = function(observer, mutations) {
-          this.listDomChanged(mutations);
-          this.onMutation(this.$.list, change);
-        }.bind(this);
-        this.onMutation(this.$.list, change);
-      },
-      listDomChanged: function(mutations) {
-        for (var j=0, m; m=mutations[j]; j++) {
-          if (m.addedNodes) {
-            for (var i=0, n; n=m.addedNodes[i]; i++) {
-              if (n.localName === 'div' && n.classList.contains('item')) {
-                //console.log('new item');
-                n.classList.add(['satin', 'grill', 'stage', 'bluefog'][Math.floor(Math.random()*4)]);
-              }
-            }
-          }
-        }
+      //  this.watchMutation();
+      //},
+      //watchMutation: function() {
+      //  var change = function(observer, mutations) {
+      //    this.listDomChanged(mutations);
+      //    this.onMutation(this.$.list, change);
+      //  }.bind(this);
+      //  this.onMutation(this.$.list, change);
+      //},
+      //listDomChanged: function(mutations) {
+      //  for (var j=0, m; m=mutations[j]; j++) {
+      //    if (m.addedNodes) {
+      //      for (var i=0, n; n=m.addedNodes[i]; i++) {
+      //        if (n.localName === 'div' && n.classList.contains('item')) {
+      //          //console.log('new item');
+      //          n.classList.add(['satin', 'grill', 'stage', 'bluefog'][Math.floor(Math.random()*4)]);
+      //        }
+      //      }
+      //    }
+      //  }
       },
       // TODO(sjmiles): needed only for Firefox?
       mousedown: function(event) {

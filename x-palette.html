@@ -49,12 +49,21 @@ license that can be found in the LICENSE file.
         border-radius: 5px;
         -webkit-transition: border 0.5s;
       }
+      .group-item {
+        font-weight: 500;
+      }
+      .group-item.palette-selected {
+        color: #4285f4;
+      }
       .simple-item {
         height: 40px;
         line-height: 40px;
         opacity: 0.7;
         font-size: 14px;
+        font-weight: 500;
         cursor: pointer;
+        color: #000;
+        white-space: nowrap;
       }
       .stage{
         background: url('stage.png');
@@ -81,9 +90,9 @@ license that can be found in the LICENSE file.
     </style>
     <x-meta id="meta" categories="{{categories}}"></x-meta>
     <div id="list" on-trackstart="{{trackStart}}" on-track="{{track}}" on-trackend="{{trackEnd}}">
-      <polymer-ui-menu>
+      <polymer-ui-menu selectedClass="palette-selected">
         <template repeat="{{categories}}">
-          <polymer-ui-submenu-item label="{{name}}">
+          <polymer-ui-submenu-item class="group-item" label="{{name}}">
             <template repeat="{{list}}">
               <!-- <div class="item {{bg}}" tag="{{id}}" loaded?="{{importsLoaded}}" ishidden?="{{isHidden}}" theme="polymer-ui-dark-theme">
                 <div style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 1.2em;">

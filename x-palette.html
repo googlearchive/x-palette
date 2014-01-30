@@ -175,7 +175,7 @@ license that can be found in the LICENSE file.
         var meta = this.$.meta.byId(tag);
         var e = event || {};
         //
-        var elt = this.fire('palette-create-drag-object', {tag: tag}).element;
+        var elt = this.fire('palette-create-drag-object', {tag: tag}).detail.element;
         return {
           origin: {left: e.pageX - 24, top: e.pageY - 24},
           element: elt
